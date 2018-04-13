@@ -29,6 +29,8 @@ class App extends Component {
     }
 
     this.onDismiss = this.onDismiss.bind(this);
+    this.onAddItem = this.onAddItem.bind(this);
+    this.handleAddChange = this.handleAddChange.bind(this);
   }
 
   onDismiss(id){
@@ -37,6 +39,24 @@ class App extends Component {
 
       this.setState({ sampleList: updatedList });
   }
+
+  onAddItem(newTitle){
+     console.log(newTitle);
+     const list = this.state.sampleList;
+     list.push({
+    title: newTitle,
+    url: 'http://www.imdb.com/title/tt0499549/?ref_=fn_al_tt_2',
+    objectID: 8
+  })
+     this.setState({sampleList: list});
+  }
+
+  handleAddChange = function(evt) {
+    this.setState({
+      addButtonInput: evt.target.value
+    });
+  }
+
 
   render() {
     const {sampleList} = this.state;
@@ -49,6 +69,10 @@ class App extends Component {
           list={sampleList}
           onDismiss={this.onDismiss}
         />
+        <div>
+           <span><input type="text" value ={this.state.addButtonInput} onChange={this.handleAddChange} id="addButton"></input></span>
+           <Button onClick={() => this.onAddItem(this.state.addButtonInput)}>Add</Button>
+        </div>
         <div>
             <img src='/popcorn.png' className="PopcornLarge"></img>
         </div>
